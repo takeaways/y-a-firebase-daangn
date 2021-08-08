@@ -1,0 +1,25 @@
+{
+  "name": "y-a-firebase-daangn",
+  "version": "1.0.0",
+  "description": "y-a-firebase-daangn",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel -p 3000 index.html "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/takeaways/y-a-firebase-daangn.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/takeaways/y-a-firebase-daangn/issues"
+  },
+  "homepage": "https://github.com/takeaways/y-a-firebase-daangn#readme",
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "typescript": "^4.3.5"
+  }
+}
