@@ -33,7 +33,8 @@
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^5.1.0",
     "firebase": "^8.9.0",
-    "parcel-plugin-asset-copier": "^1.1.0"
+    "parcel-plugin-asset-copier": "^1.1.0",
+    "src": "^1.1.2"
   },
   "assetsPath": "src/public"
 }

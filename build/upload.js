@@ -49114,9 +49114,25 @@ exports.fireAuth = fireAuth;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.logOut = exports.signIn = exports.signUp = exports.uploadImage = exports.uploadProduct = exports.getProducts = void 0;
+exports.getUserName = exports.getProduct = exports.logOut = exports.signIn = exports.signUp = exports.uploadImage = exports.uploadProduct = exports.getProducts = void 0;
 
 var _2 = require(".");
+
+var __assign = void 0 && (void 0).__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
 
 var __awaiter = void 0 && (void 0).__awaiter || function (thisArg, _arguments, P, generator) {
   function adopt(value) {
@@ -49280,7 +49296,9 @@ var getProducts = function getProducts() {
               case 1:
                 snapshot = _a.sent();
                 snapshot.forEach(function (doc) {
-                  product.push(doc.data());
+                  product.push(__assign(__assign({}, doc.data()), {
+                    id: doc.id
+                  }));
                 });
                 res(product);
                 return [2
@@ -49367,6 +49385,42 @@ var logOut = function logOut() {
 };
 
 exports.logOut = logOut;
+
+var getProduct = function getProduct(id) {
+  return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+      return [2
+      /*return*/
+      , _2.fireStore.collection("product").doc(id).get()];
+    });
+  });
+};
+
+exports.getProduct = getProduct;
+
+var getUserName = function getUserName() {
+  return __awaiter(void 0, void 0, void 0, function () {
+    var user;
+
+    var _a;
+
+    return __generator(this, function (_b) {
+      user = localStorage.getItem("user");
+
+      if (user) {
+        return [2
+        /*return*/
+        , (_a = JSON.parse(user).displayName) !== null && _a !== void 0 ? _a : ""];
+      }
+
+      return [2
+      /*return*/
+      , ""];
+    });
+  });
+};
+
+exports.getUserName = getUserName;
 },{".":"../firebase/index.ts"}],"upload.ts":[function(require,module,exports) {
 "use strict";
 

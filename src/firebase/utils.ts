@@ -1,12 +1,16 @@
+import firebase from "firebase";
 import { fireStore, fireStorage, fireAuth } from ".";
 import { Product } from "../types/product";
 
 export const getProducts = async (): Promise<Product[]> => {
   return new Promise(async (res, rej) => {
-    const product: any = [];
+    const product: Product[] = [];
     const snapshot = await fireStore.collection("product").get();
     snapshot.forEach((doc) => {
-      product.push(doc.data());
+      product.push({
+        ...(doc.data() as Product),
+        id: doc.id,
+      });
     });
     res(product);
   });
@@ -47,4 +51,16 @@ export const signIn = async (email: string, password: string) => {
 
 export const logOut = async () => {
   return fireAuth.signOut();
+};
+
+export const getProduct = async (id: string) => {
+  return fireStore.collection("product").doc(id).get();
+};
+
+export const getUserName = async () => {
+  const user = localStorage.getItem("user");
+  if (user) {
+    return (JSON.parse(user) as firebase.User).displayName ?? "";
+  }
+  return "";
 };

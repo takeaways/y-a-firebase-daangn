@@ -1,3 +1,6 @@
+import firebase from "firebase";
+import { fireAuth } from "../firebase";
+
 import { signUp, signIn, logOut } from "../firebase/utils";
 
 const register = document.querySelector("#register") as HTMLButtonElement;
@@ -20,7 +23,7 @@ const pw = document.querySelector("#pw") as HTMLInputElement;
 
 login.addEventListener("click", async () => {
   try {
-    const { user } = await signIn(email.value, pw.value);
+    await signIn(email.value, pw.value);
     window.location.href = "/";
   } catch (error) {
     console.log(error);
@@ -30,4 +33,17 @@ login.addEventListener("click", async () => {
 const logout = document.querySelector("#logout") as HTMLButtonElement;
 logout.onclick = async () => {
   logOut();
+  localStorage.removeItem("user");
 };
+
+const user = localStorage.getItem("user");
+if (user) {
+  (document.querySelector("#userName") as HTMLSpanElement).innerText =
+    (JSON.parse(user) as firebase.User).displayName ?? "";
+}
+
+fireAuth.onAuthStateChanged((user) => {
+  if (user) {
+    localStorage.setItem("user", JSON.stringify(user));
+  }
+});

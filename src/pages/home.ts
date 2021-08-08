@@ -1,5 +1,6 @@
 import Product from "../components/product";
-import { getProducts } from "../firebase/utils";
+import { getProducts, getUserName } from "../firebase/utils";
+import { fireAuth } from "../firebase";
 
 async function main() {
   const products = await getProducts();
@@ -10,4 +11,9 @@ async function main() {
 
 window.addEventListener("load", () => {
   main();
+});
+
+getUserName().then((displayName) => {
+  (document.querySelector("#userName") as HTMLSpanElement).innerText =
+    displayName;
 });
