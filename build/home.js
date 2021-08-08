@@ -49133,7 +49133,7 @@ exports.fireAuth = fireAuth;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getUserName = exports.getProduct = exports.logOut = exports.signIn = exports.signUp = exports.uploadImage = exports.uploadProduct = exports.getProducts = void 0;
+exports.updateProduct = exports.getUserId = exports.getUserName = exports.getProduct = exports.logOut = exports.signIn = exports.signUp = exports.uploadImage = exports.uploadProduct = exports.getProducts = void 0;
 
 var _2 = require(".");
 
@@ -49418,28 +49418,40 @@ var getProduct = function getProduct(id) {
 exports.getProduct = getProduct;
 
 var getUserName = function getUserName() {
-  return __awaiter(void 0, void 0, void 0, function () {
-    var user;
+  var _a;
 
-    var _a;
+  var user = localStorage.getItem("user");
 
-    return __generator(this, function (_b) {
-      user = localStorage.getItem("user");
+  if (user) {
+    return (_a = JSON.parse(user).displayName) !== null && _a !== void 0 ? _a : "";
+  }
 
-      if (user) {
-        return [2
-        /*return*/
-        , (_a = JSON.parse(user).displayName) !== null && _a !== void 0 ? _a : ""];
-      }
-
-      return [2
-      /*return*/
-      , ""];
-    });
-  });
+  return "";
 };
 
 exports.getUserName = getUserName;
+
+var getUserId = function getUserId() {
+  var _a;
+
+  var user = localStorage.getItem("user");
+
+  if (user) {
+    return (_a = JSON.parse(user).uid) !== null && _a !== void 0 ? _a : "";
+  }
+
+  return "";
+};
+
+exports.getUserId = getUserId;
+
+var updateProduct = function updateProduct(id, uploadProduct) {
+  _2.fireStore.collection("product").doc(id).update(uploadProduct).then(function () {
+    window.location.href = "/detail?id=" + id;
+  }).catch(console.log);
+};
+
+exports.updateProduct = updateProduct;
 },{".":"../firebase/index.ts"}],"home.ts":[function(require,module,exports) {
 "use strict";
 
@@ -49618,9 +49630,7 @@ function main() {
 window.addEventListener("load", function () {
   main();
 });
-(0, _utils.getUserName)().then(function (displayName) {
-  document.querySelector("#userName").innerText = displayName;
-});
+document.querySelector("#userName").innerText = (0, _utils.getUserName)();
 },{"../components/product":"../components/product.ts","../firebase/utils":"../firebase/utils.ts"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -49649,7 +49659,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57968" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58606" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

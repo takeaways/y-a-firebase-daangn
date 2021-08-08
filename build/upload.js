@@ -49114,7 +49114,7 @@ exports.fireAuth = fireAuth;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getUserName = exports.getProduct = exports.logOut = exports.signIn = exports.signUp = exports.uploadImage = exports.uploadProduct = exports.getProducts = void 0;
+exports.updateProduct = exports.getUserId = exports.getUserName = exports.getProduct = exports.logOut = exports.signIn = exports.signUp = exports.uploadImage = exports.uploadProduct = exports.getProducts = void 0;
 
 var _2 = require(".");
 
@@ -49399,28 +49399,40 @@ var getProduct = function getProduct(id) {
 exports.getProduct = getProduct;
 
 var getUserName = function getUserName() {
-  return __awaiter(void 0, void 0, void 0, function () {
-    var user;
+  var _a;
 
-    var _a;
+  var user = localStorage.getItem("user");
 
-    return __generator(this, function (_b) {
-      user = localStorage.getItem("user");
+  if (user) {
+    return (_a = JSON.parse(user).displayName) !== null && _a !== void 0 ? _a : "";
+  }
 
-      if (user) {
-        return [2
-        /*return*/
-        , (_a = JSON.parse(user).displayName) !== null && _a !== void 0 ? _a : ""];
-      }
-
-      return [2
-      /*return*/
-      , ""];
-    });
-  });
+  return "";
 };
 
 exports.getUserName = getUserName;
+
+var getUserId = function getUserId() {
+  var _a;
+
+  var user = localStorage.getItem("user");
+
+  if (user) {
+    return (_a = JSON.parse(user).uid) !== null && _a !== void 0 ? _a : "";
+  }
+
+  return "";
+};
+
+exports.getUserId = getUserId;
+
+var updateProduct = function updateProduct(id, uploadProduct) {
+  _2.fireStore.collection("product").doc(id).update(uploadProduct).then(function () {
+    window.location.href = "/detail?id=" + id;
+  }).catch(console.log);
+};
+
+exports.updateProduct = updateProduct;
 },{".":"../firebase/index.ts"}],"upload.ts":[function(require,module,exports) {
 "use strict";
 
@@ -49609,7 +49621,9 @@ submitEl.addEventListener("click", function () {
             content: content,
             price: price,
             date: new Date().toLocaleString(),
-            image: image
+            image: image,
+            uid: (0, _utils.getUserId)(),
+            userName: (0, _utils.getUserName)()
           })];
 
         case 3:
@@ -49663,7 +49677,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57968" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58606" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

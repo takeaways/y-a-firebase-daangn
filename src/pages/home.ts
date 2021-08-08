@@ -13,7 +13,5 @@ window.addEventListener("load", () => {
   main();
 });
 
-getUserName().then((displayName) => {
-  (document.querySelector("#userName") as HTMLSpanElement).innerText =
-    displayName;
-});
+(document.querySelector("#userName") as HTMLSpanElement).innerText =
+  getUserName();

@@ -1,4 +1,9 @@
-import { uploadProduct, uploadImage } from "../firebase/utils";
+import {
+  uploadProduct,
+  uploadImage,
+  getUserId,
+  getUserName,
+} from "../firebase/utils";
 
 const titleEl = document.querySelector("#title") as HTMLInputElement;
 const contentEl = document.querySelector("#content") as HTMLTextAreaElement;
@@ -24,6 +29,8 @@ submitEl.addEventListener("click", async () => {
       price,
       date: new Date().toLocaleString(),
       image,
+      uid: getUserId(),
+      userName: getUserName(),
     });
     window.location.href = "/";
   } catch (error) {

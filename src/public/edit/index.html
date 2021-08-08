@@ -16,7 +16,7 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="../css/styles.css" />
-    <title>Ganngn</title>
+    <title>상품업로드</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -37,31 +37,35 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Ganngn</a>
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/upload">상품업로드</a>
+              <a class="nav-link" href="/upload">상품올리기</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Pricing</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <div class="container">
-      <button id="edit" hidden>수정</button>
-      <div
-        class="detail-pic my-4"
-        style="background-image: url('https://placeimg.com/640/380/tech')"
-      ></div>
-      <div>
-        <h5 class="uploader"></h5>
-        <hr />
-        <h5 class="title">상품명</h5>
-        <p class="date">올린날짜</p>
-        <p class="price">가격</p>
-      </div>
+    <div class="container mt-3">
+      <input
+        type="text"
+        class="form-control mt-2"
+        id="title"
+        placeholder="title"
+      />
+      <textarea class="form-control mt-2" id="content"></textarea>
+      <input
+        type="text"
+        class="form-control mt-2"
+        id="price"
+        placeholder="price"
+      />
+      <button class="btn btn-danger mt-3" id="send">올리기</button>
     </div>
-
-    <script src="../detail.js"></script>
+    <script src="../edit.js"></script>
   </body>
 </html>

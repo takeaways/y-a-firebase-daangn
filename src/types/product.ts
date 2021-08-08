@@ -4,5 +4,7 @@ export type Product = {
   date: string;
   price: string;
   image?: string;
-  content?: string;
+  content: string;
+  uid: string;
+  userName: string;
 };

@@ -57,10 +57,29 @@ export const getProduct = async (id: string) => {
   return fireStore.collection("product").doc(id).get();
 };
 
-export const getUserName = async () => {
+export const getUserName = () => {
   const user = localStorage.getItem("user");
   if (user) {
     return (JSON.parse(user) as firebase.User).displayName ?? "";
   }
   return "";
+};
+
+export const getUserId = () => {
+  const user = localStorage.getItem("user");
+  if (user) {
+    return (JSON.parse(user) as firebase.User).uid ?? "";
+  }
+  return "";
+};
+
+export const updateProduct = (id: string, uploadProduct: Product) => {
+  fireStore
+    .collection("product")
+    .doc(id)
+    .update(uploadProduct)
+    .then(() => {
+      window.location.href = `/detail?id=${id}`;
+    })
+    .catch(console.log);
 };
