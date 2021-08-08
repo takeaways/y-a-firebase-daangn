@@ -49367,7 +49367,7 @@ var logOut = function logOut() {
 };
 
 exports.logOut = logOut;
-},{".":"../firebase/index.ts"}],"upload.ts":[function(require,module,exports) {
+},{".":"../firebase/index.ts"}],"user.ts":[function(require,module,exports) {
 "use strict";
 
 var _utils = require("../firebase/utils");
@@ -49515,65 +49515,39 @@ var __generator = void 0 && (void 0).__generator || function (thisArg, body) {
   }
 };
 
-var titleEl = document.querySelector("#title");
-var contentEl = document.querySelector("#content");
-var priceEl = document.querySelector("#price");
-var fileEl = document.querySelector("#image");
-var submitEl = document.querySelector("#send");
-submitEl.addEventListener("click", function () {
+var register = document.querySelector("#register");
+var nameNew = document.querySelector("#name-new");
+var emailNew = document.querySelector("#email-new");
+var pwNew = document.querySelector("#pw-new");
+register.addEventListener("click", function () {
   return __awaiter(void 0, void 0, void 0, function () {
-    var title, content, price, image, file, error_1;
-
-    var _a;
-
-    return __generator(this, function (_b) {
-      switch (_b.label) {
+    var user, error_1;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
         case 0:
-          title = titleEl.value;
-          content = contentEl.value;
-          price = priceEl.value;
-          image = "https://via.placeholder.com/350";
-          file = (_a = fileEl.files) === null || _a === void 0 ? void 0 : _a[0];
-          if (!file) return [3
-          /*break*/
-          , 2];
+          _a.trys.push([0, 2,, 3]);
+
           return [4
           /*yield*/
-          , (0, _utils.uploadImage)(file)];
+          , (0, _utils.signUp)(emailNew.value, pwNew.value)];
 
         case 1:
-          image = _b.sent();
-          _b.label = 2;
-
-        case 2:
-          _b.trys.push([2, 4,, 5]);
-
-          return [4
-          /*yield*/
-          , (0, _utils.uploadProduct)({
-            title: title,
-            content: content,
-            price: price,
-            date: new Date().toLocaleString(),
-            image: image
-          })];
-
-        case 3:
-          _b.sent();
-
-          window.location.href = "/";
+          user = _a.sent().user;
+          user === null || user === void 0 ? void 0 : user.updateProfile({
+            displayName: nameNew.value
+          });
           return [3
           /*break*/
-          , 5];
+          , 3];
 
-        case 4:
-          error_1 = _b.sent();
+        case 2:
+          error_1 = _a.sent();
           console.log(error_1);
           return [3
           /*break*/
-          , 5];
+          , 3];
 
-        case 5:
+        case 3:
           return [2
           /*return*/
           ];
@@ -49581,6 +49555,55 @@ submitEl.addEventListener("click", function () {
     });
   });
 });
+var login = document.querySelector("#login");
+var email = document.querySelector("#email");
+var pw = document.querySelector("#pw");
+login.addEventListener("click", function () {
+  return __awaiter(void 0, void 0, void 0, function () {
+    var user, error_2;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          _a.trys.push([0, 2,, 3]);
+
+          return [4
+          /*yield*/
+          , (0, _utils.signIn)(email.value, pw.value)];
+
+        case 1:
+          user = _a.sent().user;
+          window.location.href = "/";
+          return [3
+          /*break*/
+          , 3];
+
+        case 2:
+          error_2 = _a.sent();
+          console.log(error_2);
+          return [3
+          /*break*/
+          , 3];
+
+        case 3:
+          return [2
+          /*return*/
+          ];
+      }
+    });
+  });
+});
+var logout = document.querySelector("#logout");
+
+logout.onclick = function () {
+  return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+      (0, _utils.logOut)();
+      return [2
+      /*return*/
+      ];
+    });
+  });
+};
 },{"../firebase/utils":"../firebase/utils.ts"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -49785,4 +49808,4 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","upload.ts"], null)
+},{}]},{},["../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","user.ts"], null)

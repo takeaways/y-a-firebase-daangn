@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 
 export const firebaseConfig = {
   apiKey: process.env.API_KEY,
@@ -15,3 +16,5 @@ export const firebaseConfig = {
 
 export const myFirebase = firebase.initializeApp(firebaseConfig);
 export const fireStore = myFirebase.firestore();
+export const fireStorage = myFirebase.storage();
+export const fireAuth = myFirebase.auth();

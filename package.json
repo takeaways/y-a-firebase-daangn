@@ -4,7 +4,7 @@
   "description": "y-a-firebase-daangn",
   "main": "index.js",
   "scripts": {
-    "start": "parcel watch src/pages/*.ts --out-dir=build --no-source-maps",
+    "start": "parcel serve src/pages/*.ts --out-dir=build --no-source-maps",
     "build": "parcel build src/pages/*.ts --out-dir=build --no-source-maps"
   },
   "repository": {
