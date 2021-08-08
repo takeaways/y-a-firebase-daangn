@@ -4,8 +4,8 @@
   "description": "y-a-firebase-daangn",
   "main": "index.js",
   "scripts": {
-    "start": "parcel serve -p 3000 index.html",
-    "build": "parcel build index.html --out-dir build"
+    "start": "parcel watch src/pages/*.ts --out-dir=build --no-source-maps",
+    "build": "parcel build index.html"
   },
   "repository": {
     "type": "git",
@@ -23,11 +23,17 @@
     "@babel/preset-env": "^7.15.0",
     "@types/bootstrap": "^5.1.0",
     "@types/node": "^16.4.13",
+    "cssnano": "^5.0.7",
+    "parcel-bundler": "^1.12.5",
+    "postcss": "^8.3.6",
     "typescript": "^4.3.5"
   },
   "dependencies": {
     "@popperjs/core": "^2.9.3",
+    "babel-polyfill": "^6.26.0",
     "bootstrap": "^5.1.0",
-    "firebase": "^8.9.0"
-  }
+    "firebase": "^8.9.0",
+    "parcel-plugin-asset-copier": "^1.1.0"
+  },
+  "assetsPath": "src/public"
 }

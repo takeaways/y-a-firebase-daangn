@@ -1,0 +1,5 @@
+/* components */
+@import url(./components/product.css);
+
+/* pages */
+@import url(./pages/home.css);
