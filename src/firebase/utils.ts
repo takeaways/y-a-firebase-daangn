@@ -11,3 +11,7 @@ export const getProducts = async (): Promise<Product[]> => {
     res(product);
   });
 };
+
+export const uploadProduct = async (product: Product) => {
+  return fireStore.collection("product").add(product);
+};
