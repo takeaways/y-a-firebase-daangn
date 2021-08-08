@@ -1,5 +1,6 @@
 import { Product } from "../types/product";
-import { getProduct, updateProduct } from "../firebase/utils";
+import { getProduct, getUserId, updateProduct } from "../firebase/utils";
+import { fireStore } from "../firebase";
 
 const queryString = new URLSearchParams(window.location.search);
 const id = queryString.get("id");
@@ -10,11 +11,22 @@ const sendEl = document.querySelector("#send") as HTMLButtonElement;
 if (id) {
   let product: Product;
 
-  getProduct(id).then((result) => {
+  getProduct(id).then(async (result) => {
     product = result.data() as Product;
     titleEl.value = product.title;
-    priceEl.value = product.price;
+    priceEl.value = String(product.price);
     contentEl.value = product.content;
+
+    const user = await (
+      await fireStore.collection("user").doc(getUserId()).get()
+    ).data();
+
+    if (product.uid !== getUserId()) {
+      if (user?.role === "admin") {
+        return;
+      }
+      window.location.href = "/";
+    }
   });
 
   sendEl.onclick = () => {
@@ -26,7 +38,7 @@ if (id) {
       ...product,
       content,
       title,
-      price,
+      price: Number(price),
     });
   };
 }

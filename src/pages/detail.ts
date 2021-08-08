@@ -1,5 +1,4 @@
-import firebase from "firebase";
-import { fireAuth } from "../firebase";
+import { fireStore } from "../firebase";
 import { Product } from "../types/product";
 import { getProduct, getUserId, getUserName } from "../firebase/utils";
 
@@ -14,12 +13,16 @@ const queryString = new URLSearchParams(window.location.search);
 const id = queryString.get("id");
 if (id) {
   getProduct(id)
-    .then((result) => {
+    .then(async (result) => {
       const { image, title, date, price, userName, uid } =
         result.data() as Product;
 
       const userId = getUserId();
-      if (userId === uid) {
+      const user = await (
+        await fireStore.collection("user").doc(userId).get()
+      ).data();
+
+      if (userId === uid || user?.role === "admin") {
         editEle.hidden = false;
         editEle.onclick = () => {
           window.location.href = `/edit?id=${id}`;
@@ -37,3 +40,25 @@ if (id) {
 
 (document.querySelector("#userName") as HTMLSpanElement).innerText =
   getUserName();
+
+const chatEl = document.querySelector("#chat") as HTMLButtonElement;
+chatEl.addEventListener("click", () => {
+  if (id) {
+    getProduct(id)
+      .then((result) => {
+        const { title, date, uid } = result.data() as Product;
+        const data = {
+          who: [getUserId(), uid],
+          product: title,
+          date,
+        };
+        fireStore
+          .collection("chatroom")
+          .add(data)
+          .then(() => {
+            window.location.href = "/chat";
+          });
+      })
+      .catch(console.log);
+  }
+});

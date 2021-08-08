@@ -49436,7 +49436,152 @@ exports.updateProduct = updateProduct;
 },{".":"../firebase/index.ts"}],"detail.ts":[function(require,module,exports) {
 "use strict";
 
+var _firebase = require("../firebase");
+
 var _utils = require("../firebase/utils");
+
+var __awaiter = void 0 && (void 0).__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __generator = void 0 && (void 0).__generator || function (thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function sent() {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
+  },
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
+
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
+  }
+
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) {
+      try {
+        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+        if (y = 0, t) op = [op[0] & 2, t.value];
+
+        switch (op[0]) {
+          case 0:
+          case 1:
+            t = op;
+            break;
+
+          case 4:
+            _.label++;
+            return {
+              value: op[1],
+              done: false
+            };
+
+          case 5:
+            _.label++;
+            y = op[1];
+            op = [0];
+            continue;
+
+          case 7:
+            op = _.ops.pop();
+
+            _.trys.pop();
+
+            continue;
+
+          default:
+            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+              _ = 0;
+              continue;
+            }
+
+            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+              _.label = op[1];
+              break;
+            }
+
+            if (op[0] === 6 && _.label < t[1]) {
+              _.label = t[1];
+              t = op;
+              break;
+            }
+
+            if (t && _.label < t[2]) {
+              _.label = t[2];
+
+              _.ops.push(op);
+
+              break;
+            }
+
+            if (t[2]) _.ops.pop();
+
+            _.trys.pop();
+
+            continue;
+        }
+
+        op = body.call(thisArg, _);
+      } catch (e) {
+        op = [6, e];
+        y = 0;
+      } finally {
+        f = t = 0;
+      }
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+};
 
 var imageEle = document.querySelector(".detail-pic");
 var titleEle = document.querySelector(".title");
@@ -49449,34 +49594,71 @@ var id = queryString.get("id");
 
 if (id) {
   (0, _utils.getProduct)(id).then(function (result) {
-    var _a = result.data(),
-        image = _a.image,
-        title = _a.title,
-        date = _a.date,
-        price = _a.price,
-        userName = _a.userName,
-        uid = _a.uid;
+    return __awaiter(void 0, void 0, void 0, function () {
+      var _a, image, title, date, price, userName, uid, userId, user;
 
-    var userId = (0, _utils.getUserId)();
+      return __generator(this, function (_b) {
+        switch (_b.label) {
+          case 0:
+            _a = result.data(), image = _a.image, title = _a.title, date = _a.date, price = _a.price, userName = _a.userName, uid = _a.uid;
+            userId = (0, _utils.getUserId)();
+            return [4
+            /*yield*/
+            , _firebase.fireStore.collection("user").doc(userId).get()];
 
-    if (userId === uid) {
-      editEle.hidden = false;
+          case 1:
+            return [4
+            /*yield*/
+            , _b.sent().data()];
 
-      editEle.onclick = function () {
-        window.location.href = "/edit?id=" + id;
-      };
-    }
+          case 2:
+            user = _b.sent();
 
-    userEle.innerText = "\uC62C\uB9B0\uC0AC\uB78C : " + userName;
-    imageEle.style.backgroundImage = "url(" + image + ")";
-    titleEle.innerText = title;
-    dateEle.innerText = date;
-    priceEle.innerText = Number(price).toLocaleString() + " \uC6D0";
+            if (userId === uid || (user === null || user === void 0 ? void 0 : user.role) === "admin") {
+              editEle.hidden = false;
+
+              editEle.onclick = function () {
+                window.location.href = "/edit?id=" + id;
+              };
+            }
+
+            userEle.innerText = "\uC62C\uB9B0\uC0AC\uB78C : " + userName;
+            imageEle.style.backgroundImage = "url(" + image + ")";
+            titleEle.innerText = title;
+            dateEle.innerText = date;
+            priceEle.innerText = Number(price).toLocaleString() + " \uC6D0";
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
   }).catch(console.log);
 }
 
 document.querySelector("#userName").innerText = (0, _utils.getUserName)();
-},{"../firebase/utils":"../firebase/utils.ts"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var chatEl = document.querySelector("#chat");
+chatEl.addEventListener("click", function () {
+  if (id) {
+    (0, _utils.getProduct)(id).then(function (result) {
+      var _a = result.data(),
+          title = _a.title,
+          date = _a.date,
+          uid = _a.uid;
+
+      var data = {
+        who: [(0, _utils.getUserId)(), uid],
+        product: title,
+        date: date
+      };
+
+      _firebase.fireStore.collection("chatroom").add(data).then(function () {
+        window.location.href = "/chat";
+      });
+    }).catch(console.log);
+  }
+});
+},{"../firebase":"../firebase/index.ts","../firebase/utils":"../firebase/utils.ts"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -49504,7 +49686,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58606" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57294" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

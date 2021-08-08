@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import { fireAuth } from "../firebase";
+import { fireAuth, fireStore } from "../firebase";
 
 import { signUp, signIn, logOut } from "../firebase/utils";
 
@@ -11,7 +11,15 @@ const pwNew = document.querySelector("#pw-new") as HTMLInputElement;
 register.addEventListener("click", async () => {
   try {
     const { user } = await signUp(emailNew.value, pwNew.value);
-    user?.updateProfile({ displayName: nameNew.value });
+    if (user) {
+      user.updateProfile({ displayName: nameNew.value }).then(() => {
+        fireStore.collection("user").doc(user.uid).set({
+          displayName: nameNew.value,
+          email: user.email,
+          id: user.uid,
+        });
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -34,6 +42,7 @@ const logout = document.querySelector("#logout") as HTMLButtonElement;
 logout.onclick = async () => {
   logOut();
   localStorage.removeItem("user");
+  window.location.href = "/";
 };
 
 const user = localStorage.getItem("user");
@@ -44,6 +53,7 @@ if (user) {
 
 fireAuth.onAuthStateChanged((user) => {
   if (user) {
+    console.log(user);
     localStorage.setItem("user", JSON.stringify(user));
   }
 });

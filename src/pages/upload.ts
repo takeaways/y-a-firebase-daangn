@@ -26,7 +26,7 @@ submitEl.addEventListener("click", async () => {
     await uploadProduct({
       title,
       content,
-      price,
+      price: Number(price),
       date: new Date().toLocaleString(),
       image,
       uid: getUserId(),
